@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Example Form</title>
+	<style>
+		body {
+			background-color: #455962; /* set background color */
+			display: flex;
+			justify-content: center; /* center content horizontally */
+			align-items: center; /* center content vertically */
+			height: 100vh; /* set height to 100% of viewport */
+		}
+		form {
+			margin: 20px auto;
+			max-width: 400px;
+			padding: 20px;
+			background-color: #455962;
+			border-radius: 5px;
+		}
+		input[type=text] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			background-color: #dae2e6;
+			font-size: 16px;
+		}
+		input[type=submit] {
+			background-color: #4CAF50;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			cursor: pointer;
+		}
+		#result {
+			/* margin-top: 20px; */
+			/* padding: 20px; */
+			background-color: #455962;
+			/* border: 1px solid #ccc; */
+			color: white;
+			font-size: 200%;
+		}
+	</style>
+</head>
+<body>
+	
+	<form method="post">
+		<label for="input" style="color: white; font-size: 150;">Enter crop name:</label><br>
+		<input type="text" id="input" name="keyword"><br>
+		<input type="submit" value="Submit">
+		<div id="result">
+			{% if result %}
+				<p>{{fruit}} can be cultivated at a depth of {{ result }} inches</p>
+			{% endif %}
+		</div>
+	</form>
+	
+</body>
+</html>

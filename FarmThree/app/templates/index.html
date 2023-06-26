@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Chat</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@800&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;800&display=swap" rel="stylesheet">
+        <style>
+                html body {
+                    background-color: #455962;
+                }
+        </style>
+    </head>
+    <body>
+        <h1 style="font-family: 'Roboto Slab', serif; font-size: 250%; margin-left: 40%; margin-top: 20%; color: #fff;">Enter Username</h1>
+        <form method="POST" style="margin-left: 40%; color: #fff;">
+            {{ form.hidden_tag() }}
+            {{ form.name.label }}: {{ form.name() }} {% for error in form.name.errors %}{{ error }}{% endfor %}<br>
+            {{ form.room.label }}: {{ form.room() }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br>
+            {{ form.submit() }}
+        </form>
+    </body>
+</html>

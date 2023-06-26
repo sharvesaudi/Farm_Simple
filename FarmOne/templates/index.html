@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FarmSimple</title>
+  <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+    href="https://fonts.googleapis.com/css?family=Poppins:400,700&amp;display=swap"
+    rel="stylesheet"/>
+
+
+    <!-- Compiled and minified JavaScript -->
+    <style>
+        div.main {
+            padding: 5px 50px 75px 50px;
+        }
+
+        span,img {
+            vertical-align: middle;
+         }
+
+        .brand-logo > span,.brand-logo > img {
+            vertical-align: middle;
+        }
+
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+</head>
+<body class="main">
+  <div>
+    <!DOCTYPE html>
+    <html>
+  
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <style>
+        * {
+          box-sizing: border-box;
+        }
+
+        a {
+          color: #fff;
+          font-family: 'Poppins', sans-serif;
+        }
+  
+        body {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+        .amber.lighten-2 {
+            background-color: #455962 !important;
+        }
+        .topnav {
+          overflow: hidden;
+          background-color: #27db13;
+        }
+  
+        .topnav a {
+          float: left;
+          display: block;
+          color: rgb(243, 238, 238);
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+  
+        .topnav a:hover {
+          background-color: #ddd;
+          color: rgb(235, 241, 244);
+        }
+  
+        .topnav a.active {
+          background-color: #2196F3;
+          color: white;
+        }
+  
+        .topnav .search-container {
+          float: right;
+        }
+  
+        .topnav input[type=text] {
+          padding: 6px;
+          margin-top: 8px;
+          font-size: 17px;
+          text-decoration-color: #ccc;
+          border: none;
+        }
+  
+        .topnav .search-container button {
+          float: right;
+          padding: 6px 10px;
+          margin-top: 8px;
+          margin-right: 16px;
+          background: #ddd;
+          font-size: 17px;
+          border: none;
+          cursor: pointer;
+        }
+  
+        .topnav .search-container button:hover {
+          background: #ccc;
+        }
+  
+        @media screen and (max-width: 600px) {
+          .topnav .search-container {
+            float: none;
+          }
+  
+          .topnav a,
+          .topnav input[type=text],
+          .topnav .search-container button {
+            float: none;
+            display: block;
+            text-align: left;
+            color: rgb(243, 237, 237);
+            width: 100%;
+            margin: 0;
+            padding: 14px;
+          }
+  
+          .topnav input[type=text] {
+            border: 1px solid #ccc;
+          }
+        }
+      </style>
+    </head>
+  
+    <body>
+<!--   
+      <div class="topnav">
+        
+
+      </div> -->
+  <div>
+
+
+
+	<div class="nav-wrapper">
+		<h3 class="card-panel #ffd54f amber lighten-2 center valign-wrapper center" style="margin-top: 0px;"><a class="brand-logo  #ffd54f-text text-lighten-4" href="http://localhost:5000">
+          <span>FarmSimple</span></a>
+          </a>
+          <div class="search-container", style="margin-left: 875px;">
+            <form action="{{ url_for("search")}}" method="post">
+              <input type="text" style="font-size:18pt;height:50px;width:200px;"placeholder="Search.." name="search">
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+      </h3>
+  
+
+	</div>
+
+    <!--
+  <h3 class="card-panel #ffd54f amber lighten-2 center valign-wrapper center"><img src="/static/ApnaAnaajLogo.png
+" height="70px" width="70px">Apna Anaaj</h3>
+    -->
+
+    <div class="row">
+    <div class="card-panel col s9">
+      <h4 class=" #e0f7fa cyan lighten-5">Top Gainers(Current trends)</h4>
+      <table class="striped">
+        <thead>
+          <tr>
+              <th>Item Name</th>
+              <th>Price (per Qtl.)</th>
+              <th>Change</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for item in context['top5'] %}
+          <tr>
+            <td>{{item[0]}}</td>
+            <td>₹{{item[1]}}</td>
+            <td class="valign-wrapper">{{item[2]}}% <img src="../static/gain-icon.png" height="25" width="25"></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+        <div class="card-panel">
+      <h4 class="#e0f7fa cyan lighten-5">Top Losers(Current trends)</h4>
+      <table class="striped">
+        <thead>
+          <tr>
+              <th>Item Name</th>
+              <th>Price (per Qtl.)</th>
+              <th>Change</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for item in context['bottom5'] %}
+          <tr>
+            <td>{{item[0]}}</td>
+            <td>₹{{item[1]}}</td>
+            <td class="valign-wrapper">{{item[2]}}% <img src="../static/loss-icon.png" height="25" width="25"></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+            </div>
+    </div>
+    <div class="col s3">
+      <div class="card grey lighten-3">
+        <div class="card-content black-text">
+          <h6>Star Commodity Prediction</h6>
+           <span class="card-title" id="time">{{context.sixmonths[0][0]}}</span>
+          <table class="valign-wrapper">
+            <tr>
+              <td><h5 id="crop1">{{context.sixmonths[0][1]}}</h5></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td class="right">
+                  <h4 id="price1">₹{{context.sixmonths[0][2]}}</h4>
+              <p id="pos-change" class="valign-wrapper right">{{context.sixmonths[0][3]}}%</p><img id="change1" src="../static/gain-icon.png" height="20" width="20" style="{margin-left: 5;}"></td>
+
+            </tr>
+            <tr>
+              <td><h5 id="crop2">{{context.sixmonths[0][4]}}</h5></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td class="right"><h4 id="price2">₹{{context.sixmonths[0][5]}}</h4>
+              <p id="neg-change" class="valign-wrapper right">{{context.sixmonths[0][6]}}%</p><img id="change2" src="../static/loss-icon.png" height="20" width="20" style="{margin-left: 5;}">
+                </td>
+            </tr>
+          </table>
+          <script>
+            function sleep(ms) {
+              return new Promise(resolve => setTimeout(resolve, ms));
+             }
+            function updateTime(i){
+              $('#time').load('http://localhost:4000/ticker/'+0+ '/' + i);
+            }
+
+            function updateCrop1(i){
+              $('#crop1').load('http://localhost:4000/ticker/'+ 1 + '/' + i);
+            }
+
+            function updatePrice1(i){
+              $('#price1').load('http://localhost:4000/ticker/'+ 2 + '/' + i);
+            }
+
+            function updateChange1(i){
+              $("#change1").attr("src","../static/gain-icon.png");
+              $('#pos-change').load('http://localhost:4000/ticker/'+ 3 + '/'  + i);
+
+            }
+
+            function updateCrop2(i){
+              $('#crop2').load('http://localhost:4000/ticker/'+ 4 + '/'  + i);
+            }
+
+            function updatePrice2(i){
+              $('#price2').load('http://localhost:4000/ticker/'+ 5 + '/'  + i);
+            }
+
+            function updateChange2(i){
+              $("#change2").attr("src","../static/loss-icon.png");
+              $('#neg-change').load('http://localhost:4000/ticker/'+ 6 + '/'  + i);
+
+            }
+          </script>
+
+            <script>
+                    var i = 0
+                    setInterval(async function(){
+                    i = (i+1)%5;
+                    updateTime(i);
+
+                    updateCrop1(i);
+                    await sleep(200);
+
+                    updatePrice1(i);
+                    await sleep(200);
+
+                    updateChange1(i);
+                    await sleep(200);
+
+                    updateCrop2(i);
+                    await sleep(200);
+
+                    updatePrice2(i);
+                    await sleep(200);
+
+                    updateChange2(i);
+                    await sleep(200);
+
+                    /*
+                    setTimeout(updateCrop1(i), 100);
+                    setTimeout(updatePrice1(i), 300);
+                    setTimeout(updateChange1(i), 500);
+                    setTimeout(updateCrop2(i), 700);
+                    setTimeout(updatePrice2(i), 800);
+                    setTimeout(updateChange2(i), 900);
+                    */
+
+                    }, 4000);
+
+            </script>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <h5>Explore by commodity</h5>
+  <div class="row">
+    <div class="col s3">
+      <a href="http://localhost:4000/commodity/paddy" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/rice-bowl.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Paddy</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+     <div class="col s3">
+      <a href="http://localhost:4000/commodity/wheat" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/wheat.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Wheat</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/barley" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/barley.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Barley</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/soyabean" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/soy.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Soya Bean</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+  </div>
+    <div class="row">
+    <div class="col s3">
+      <a href="http://localhost:4000/commodity/cotton" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/cotton.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Cotton</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+     <div class="col s3">
+      <a href="http://localhost:4000/commodity/copra" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/coconut.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Coconut</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/groundnut" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/peanuts.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Ground Nut Seeds</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/rape" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://image.flaticon.com/icons/svg/188/188317.svg">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Mustard Seed</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+  </div>
+    <div class="row">
+    <div class="col s3">
+      <a href="http://localhost:4000/commodity/sesamum" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/sesame.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Gingelly Seed(Sesamum)</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+     <div class="col s3">
+      <a href="http://localhost:4000/commodity/gram" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/paper-bag-with-seeds.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Gram</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/sugarcane" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/bamboo.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Sugarcane</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/arhar" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/paper-bag-with-seeds.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Arhar</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+  </div>
+    <div class="row">
+    <div class="col s3">
+      <a href="http://localhost:4000/commodity/ragi" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/office/48/000000/wheat.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Ragi</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+     <div class="col s3">
+      <a href="http://localhost:4000/commodity/maize" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/corn.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Maize</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/moong" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/paper-bag-with-seeds.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Moong</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/masoor" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/paper-bag-with-seeds.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Masoor</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+  </div>
+    <div class="row">
+    <div class="col s3">
+      <a href="http://localhost:4000/commodity/urad" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/paper-bag-with-seeds.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Urad</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+     <div class="col s3">
+      <a href="http://localhost:4000/commodity/jute" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/potato.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Raw Jute</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/niger" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/paper-bag-with-seeds.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Niger Seed</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/safflower" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/paper-bag-with-seeds.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Kardi Seed</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+  </div>
+    <div class="row">
+    <div class="col s3">
+      <a href="http://localhost:4000/commodity/sunflower" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/potato.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Sunflower</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+     <div class="col s3">
+      <a href="http://localhost:4000/commodity/jowar" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/potato.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Jowar</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div> <div class="col s3">
+      <a href="http://localhost:4000/commodity/bajra" style="color: #000000">
+      <div class="card grey lighten-4">
+        <div class="card-content row valign-wrapper">
+          <div class="col s3">
+          <img src="https://img.icons8.com/color/48/000000/potato.png">
+        </div>
+        <div class="col s9">
+          <span class="card-title">Bajra</span>
+        </div>
+        </div>
+      </div>
+    </a>
+    </div>
+  </div>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $('.slider').slider({full_width :true});
+  });
+</script>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</html>

@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Chat</title>
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="//cdn.socket.io/4.4.1/socket.io.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <script type="text/javascript" charset="utf-8">
+            var socket;
+            $(document).ready(function(){
+                socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+                socket.on('connect', function() {
+                    socket.emit('joined', {});
+                });
+                socket.on('status', function(data) {
+                    $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
+                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                });
+                socket.on('message', function(data) {
+                    $('#chat').val($('#chat').val() + data.msg + '\n');
+                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                });
+                $('#text').keypress(function(e) {
+                    var code = e.keyCode || e.which;
+                    if (code == 13) {
+                        text = $('#text').val();
+                        $('#text').val('');
+                        socket.emit('text', {msg: text});
+                    }
+                });
+            });
+            function leave_room() {
+                socket.emit('left', {}, function() {
+                    socket.disconnect();
+
+                    // go back to the login page
+                    window.location.href = "{{ url_for('main.index') }}";
+                });
+            }
+        </script>
+        <style>
+            html body {
+            background-color: #455962;
+        }
+        </style>
+    </head>
+    <body>
+        <h1 style="color: #fff; font-family: 'Roboto Slab', serif;">Chat</h1>
+        <textarea id="chat" cols="80" rows="20" style="margin-left: 5%;"></textarea><br><br>
+        <input id="text" size="80" placeholder="Enter your message here" style="margin-left: 5%;"><br><br>
+        <a href="#" onclick="leave_room();" style="color: #fff;">Leave the chat</a>
+    </body>
+</html>
