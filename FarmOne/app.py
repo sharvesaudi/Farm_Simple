@@ -7,13 +7,15 @@ import pandas as pd
 from datetime import datetime
 import crops
 import random
-
+import os
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 cors = CORS(app, resources={r"/ticker": {"origins": "http://localhost:port"}})
 
+print("\n\n\n")
+print(os.getcwd())
 commodity_dict = {
     "arhar": "static/Arhar.csv",
     "bajra": "static/Bajra.csv",
